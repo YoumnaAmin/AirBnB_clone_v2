@@ -113,15 +113,102 @@ class HBNBCommand(cmd.Cmd):
         """ Overrides the emptyline method of CMD """
         pass
 
+    """
+    mahmoud :
+     - add function that handel the value -> value_handler(str)
+     - function that handel the string value -> string_handeler(statment)
+     - update the create function to fetch new argumant
+    """
+    def value_handler(self, argumant):
+        """
+        this method handel  the value to create
+        method from string or int or float ...etc
+        """
+        argumant = argumant.split()
+        result = dict()
+        for arg in argumant:
+            keyvalue = arg.split('=')
+            # check if the we have key and value
+            if len(keyvalue) != 2:
+                continue  # in this case should skip the argumant
+            if keyvalue[1][0] == '"':  # check if value is string  or not
+                value = self.string_handeler(keyvalue[1])
+                if value is None:  # in case the not valid
+                    continue
+                else:  # valid string
+                    result[keyvalue[0]] = value
+
+            elif '.' in keyvalue[1]:  # check if it's a float number
+                try:
+                    value = float(keyvalue[1])
+                    result[keyvalue[0]] = value
+
+                except ValueError:
+                    """ in case its not a float number or value not valid """
+                    continue
+            elif keyvalue[1].isdigit():  # check if it's integer
+                result[keyvalue[0]] = int(keyvalue[1])
+            else:
+                continue
+        return result    
+
+    def string_handeler(self, statment):
+        """
+        loop of the value to remove " from start and handel /,_
+        and handel space
+        """
+        if len(statment) == 2:
+            return ''
+
+        value = ''
+        valid = True
+
+        for i in range(1, len(statment) - 1):
+            if (statment[i] == '_'):   # handel <'_'>
+                value += ' '
+            # handel <'"'>
+            elif (statment[i] == '\\' and i < len(statment) - 1):
+                if (statment[i + 1] == '"'):
+                    value += '"'
+                else:
+                    continue
+            elif (statment[i] == '"'):
+                if (statment[i - 1] == '\\'):
+                    continue
+                else:
+                    valid = False
+                    break
+
+            elif (statment[i] == ' '):
+                valid = False
+                break
+
+            else:
+                value += statment[i]
+
+        if valid:
+            return value
+        else:
+            return None
+
     def do_create(self, args):
         """ Create an object of any class"""
-        if not args:
+        argumant = args.partition(" ")
+        if not args:   # in case there are no command arguments
             print("** class name missing **")
             return
-        elif args not in HBNBCommand.classes:
+
+        elif argumant[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[args]()
+        if (len(argumant) == 3):  # check if there argumants
+            keyvalue['updated_at'] = None
+            keyvalue['created_at'] = None 
+            keyvalue =  self.value_handler(argumant[2])
+            new_instance = HBNBCommand.classes[args](keyvalue) # pass **kwargs to constructor
+        else:  # there is not argumants in the command
+            new_instance = HBNBCommand.classes[args]()
+            
         storage.save()
         print(new_instance.id)
         storage.save()
