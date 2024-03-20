@@ -18,7 +18,7 @@ fs.save()
 print("New State: {}".format(new_state))
 
 # All States
-all_states = fs.all()
+all_states = fs.all('State')
 print("All States: {}".format(len(all_states.keys())))
 for state_key in all_states.keys():
     print(all_states[state_key])
@@ -31,7 +31,7 @@ fs.save()
 print("Another State: {}".format(another_state))
 
 # All States
-all_states = fs.all()
+all_states = fs.all('State')
 print("All States: {}".format(len(all_states.keys())))
 for state_key in all_states.keys():
     print(all_states[state_key])        
@@ -40,7 +40,7 @@ for state_key in all_states.keys():
 fs.delete(new_state)
 
 # All States
-all_states = fs.all()
+all_states = fs.all('State')
 print("All States: {}".format(len(all_states.keys())))
 for state_key in all_states.keys():
     print(all_states[state_key])
