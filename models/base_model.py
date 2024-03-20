@@ -5,7 +5,7 @@ from datetime import datetime,utc
 from sqlalchemy import Column, Integer, String, create_engine, ForeignKey
 from sqlalchemy import CHAR, DateTime,func
 from sqlalchemy.ext.declarative import declarative_base
-from model_state import Base, State
+
 
 
 Base = declarative_base()
