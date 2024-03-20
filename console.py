@@ -131,7 +131,7 @@ class HBNBCommand(cmd.Cmd):
             # check if the we have key and value
             if len(keyvalue) != 2:
                 continue  # in this case should skip the argumant
-            if keyvalue[1][0] == '"':  # check if value is string  or not
+            if keyvalue[1][0] == '"':  # check if value is string or not
                 value = self.string_handeler(keyvalue[1])
                 if value is None:  # in case the not valid
                     continue
@@ -150,7 +150,7 @@ class HBNBCommand(cmd.Cmd):
                 result[keyvalue[0]] = int(keyvalue[1])
             else:
                 continue
-        return result    
+        return result
 
     def string_handeler(self, statment):
         """
@@ -203,10 +203,12 @@ class HBNBCommand(cmd.Cmd):
             return
         if (len(argumant) == 3):  # check if there argumants
             keyvalue = self.value_handler(argumant[2])
-            new_instance = HBNBCommand.classes[argumant[0]](keyvalue)
+            new_instance = HBNBCommand.classes[argumant[0]]()
+            for k, v in keyvalue.items():
+                setattr(new_instance, k, v)
         else:  # there is not argumants in the command
             new_instance = HBNBCommand.classes[argumant[0]]()
-            
+
         storage.save()
         print(new_instance.id)
         storage.save()
