@@ -202,12 +202,10 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
         if (len(argumant) == 3):  # check if there argumants
-            keyvalue['updated_at'] = None
-            keyvalue['created_at'] = None 
-            keyvalue =  self.value_handler(argumant[2])
-            new_instance = HBNBCommand.classes[args](keyvalue) # pass **kwargs to constructor
+            keyvalue = self.value_handler(argumant[2])
+            new_instance = HBNBCommand.classes[argumant[0]](keyvalue)
         else:  # there is not argumants in the command
-            new_instance = HBNBCommand.classes[args]()
+            new_instance = HBNBCommand.classes[argumant[0]]()
             
         storage.save()
         print(new_instance.id)
