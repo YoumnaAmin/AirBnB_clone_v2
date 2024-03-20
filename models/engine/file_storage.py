@@ -24,9 +24,6 @@ class FileStorage:
                     if cls == v.__class__.__name__:
                         result[k] = v
         return result
-                        
-                        
-                
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
@@ -74,4 +71,3 @@ class FileStorage:
         k = obj.to_dict()['__class__'] + '.' + obj.id
         if k in self.__objects.keys():
             del  self.__objects[k]
-        
