@@ -5,7 +5,7 @@ from sqlalchemy import Column, Integer, String, create_engine, ForeignKey
 from sqlalchemy import CHAR, DateTime,func
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-from models.state import State
+
 
 class State(BaseModel):
     """ State class """
@@ -13,5 +13,5 @@ class State(BaseModel):
     name = Column(String(128), nullable=False)
 
      # Relationship for DBStorage
-    cities = relationship("City", backref="state", cascade="all, delete-orphan")
+    cities = relationship("City", backref="State", cascade="all, delete-orphan")
 

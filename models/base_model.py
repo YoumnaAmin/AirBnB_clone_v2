@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """This module defines a base class for all models in our hbnb clone"""
 import uuid
-from datetime import datetime,utc
+from datetime import datetime
 from sqlalchemy import Column, Integer, String, create_engine, ForeignKey
 from sqlalchemy import CHAR, DateTime,func
 from sqlalchemy.ext.declarative import declarative_base
@@ -12,6 +12,7 @@ Base = declarative_base()
 
 class BaseModel(Base):
     """A base class for all hbnb models"""
+    __abstract__ = True
     id = Column(String(60), primary_key=True,nullable=False)
     created_at = Column(DateTime, nullable=False, default=func.utcnow())
     updated_at = Column(DateTime, nullable=False, default=func.utcnow())

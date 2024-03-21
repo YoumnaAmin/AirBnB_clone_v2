@@ -1,10 +1,9 @@
 #!/usr/bin/python3
 
 """ this module to deal with the sql databases """
-from datetime import datetime,utc
+from datetime import datetime
 from sqlalchemy import Column, Integer, String, create_engine, ForeignKey
 from sqlalchemy.sql import select, insert, update, delete
-from sqlalchemy.sql import where, group_by, join, and_, or_, not_
 from sqlalchemy import CHAR, DateTime, func
 from sqlalchemy.orm import sessionmaker,scoped_session
 from sqlalchemy.ext.declarative import declarative_base

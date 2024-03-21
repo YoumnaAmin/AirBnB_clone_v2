@@ -5,6 +5,11 @@ from sqlalchemy import Float, String, ForeignKey, MetaData
 from sqlalchemy.orm import relationship, backref
 import models
 from models.base_model import BaseModel, Base
+from models.amenity import Amenity
+from models.state import State
+from models.user import User
+from models.city import City
+from models.review import Review
 from os import environ
 
 place_amenity = Table('place_amenity', Base.metadata,
