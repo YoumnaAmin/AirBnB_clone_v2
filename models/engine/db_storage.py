@@ -6,7 +6,7 @@ from sqlalchemy import Column, Integer, String, create_engine, ForeignKey
 from sqlalchemy.sql import select, insert, update, delete
 from sqlalchemy.sql import where, group_by, join, and_, or_, not_
 from sqlalchemy import CHAR, DateTime, func
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker,scoped_session
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.exc import NoSuchTableError, OperationalError, ProgrammingError
 from models.amenity import Amenity
@@ -108,11 +108,22 @@ class DBStorage:
                     pass
                 except ProgrammingError as API_Error:
                     pass
-            
-            
-            
-            
-        
     
-                    
+    def reload(self):
+        """
+        Create all tables in the database and create a new session.
+        """
+        # Create all tables in the database
+        Base.metadata.create_all(self.__engine)
+
+        # Create a sessionmaker with scoped_session
+        session_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        self.__session = scoped_session(session_factory)
+
+        try:
+            # Attempt to commit any pending transactions
+            self.__session.commit()
+        except OperationalError:
+            # Handle operational errors if any
+            pass
     
