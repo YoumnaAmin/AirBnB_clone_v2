@@ -77,14 +77,41 @@ class DBStorage:
                 pass
             except ProgrammingError as API_Error:
                 pass
-
         return data
+
     def new(self, obj):
         """ add the object to the current database session """
+        if obj is not None:
+            if self.__session.is_active:  #check if the session is open
+                try:
+                    self.__session.add(obj)
+                except NoSuchTableError as no_table:  #incase we wanna test where the error
+                    pass
+                except OperationalError as OP_Error:
+                    pass
+                except ProgrammingError as API_Error:
+                    pass
+                    
     def save(self):
-        """ ommit all changes of the current database session """
+        """ commit all changes of the current database session """
+        self.__session.commit()
+    
     def delete(self, obj=None):
         """"delete from the current database session obj if not None"""
+        if obj is not None:
+            if self.__session.is_active:  #check if the session is open
+                try:
+                    self.__session.delete(obj)
+                except NoSuchTableError as no_table:  #incase we wanna test where the error
+                    pass
+                except OperationalError as OP_Error:
+                    pass
+                except ProgrammingError as API_Error:
+                    pass
+            
+            
+            
+            
         
     
                     
