@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+"""the __init__ module"""
 import os
 
 # Check the value of HBNB_TYPE_STORAGE environment variable
