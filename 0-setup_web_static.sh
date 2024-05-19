@@ -18,26 +18,24 @@ create_directory() {
 
 # Function to create a fake HTML file
 create_fake_html() {
-    locla file="$1"
+    local file="$1"
     echo "<!DOCTYPE html>
-    <html>
-    <head>
-        <title>TEST</title>
-    </head>
-    <body>
-        <h1>Test</h1>
-    </body>
-    </html>" > "$(file)"
+<html>
+<head>
+    <title>TEST</title>
+</head>
+<body>
+    <h1>Test</h1>
+</body>
+</html>" > "$file"
 }
 
-
 # Function to create a symbolic link
-craete_symbolic_link () {
+create_symbolic_link() {
     local target=$1
     local link=$2
-    if [ "$link" ];
-    then
-        sudo rm -f "link"
+    if [ -L "$link" ]; then
+        sudo rm -f "$link"
     fi
     sudo ln -s "$target" "$link"
 }
@@ -48,15 +46,10 @@ set_ownership() {
     sudo chown -R ubuntu:ubuntu "$dir"
 }
 
-
 # Function to update Nginx configuration
 update_nginx_configuration() {
     local nginx_conf="/etc/nginx/sites-available/default"
-    sudo sed -i '/server_name _;/a
-    location /hbnb_static {\\n
-        alias /data/web_static/current/;\\n
-        autoindex off;\\n
-    }' "$nginx_conf"
+    sudo sed -i '/server_name _;/a location /hbnb_static {\n\talias /data/web_static/current/;\n\tautoindex off;\n}' "$nginx_conf"
     sudo systemctl restart nginx
 }
 
