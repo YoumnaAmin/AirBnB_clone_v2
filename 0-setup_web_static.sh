@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-
 # Function to install Nginx
+
 install_nginx() {
     if ! nginx -v &> /dev/null; then
         sudo apt update
