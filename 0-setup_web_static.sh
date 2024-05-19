@@ -5,6 +5,7 @@ install_nginx() {
     if ! nginx -v &> /dev/null; then
         sudo apt update
         sudo apt install -y nginx
+        
     fi
 }
 
@@ -64,3 +65,4 @@ create_fake_html "/data/web_static/releases/test/index.html"
 create_symbolic_link "/data/web_static/releases/test/" "/data/web_static/current"
 set_ownership "/data/"
 update_nginx_configuration
+exit 0
