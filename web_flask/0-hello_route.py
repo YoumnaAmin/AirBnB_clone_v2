@@ -11,5 +11,6 @@ def hello_hbnb():
     """home page"""
     return "<h1>Hello HBNB!</h1>"
 
+
 if __name__ == '__main__':
     app.run()
