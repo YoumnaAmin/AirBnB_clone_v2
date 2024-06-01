@@ -26,7 +26,7 @@ def slash_hbnb():
 @app.route('/c/<text>', strict_slashes=False)
 def c_text(text):
     """display c followed by text"""
-    return f"C {escape(text)}"
+    return f"C {escape(text.replace('_', ' '))}"
 
 
 if __name__ == '__main__':
