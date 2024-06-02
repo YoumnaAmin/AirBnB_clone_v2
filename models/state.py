@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 """ State Module for HBNB project """
-from models.base_model import BaseModel
-from sqlalchemy import Column, Integer, String, create_engine, ForeignKey
-from sqlalchemy import CHAR, DateTime,func
-from sqlalchemy.ext.declarative import declarative_base
+
+from AirBnB_clone_v2.models.city import City
+from models.base_model import BaseModel, Base
+from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
+import models
 
 
 class State(BaseModel):
@@ -15,3 +16,8 @@ class State(BaseModel):
      # Relationship for DBStorage
     cities = relationship("City", backref="State", cascade="all, delete-orphan")
 
+    @property
+    def cities(self):
+        """Return the list of City objects from storage linked to the current State"""
+        if models.storage_t != 'db':
+            return [city for city in models.storage.all(City).values() if city.state_id == self.id]

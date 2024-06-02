@@ -126,3 +126,5 @@ class DBStorage:
             # Handle operational errors if any
             pass
     
+    def  close(self):
+        self.__session.remove()
