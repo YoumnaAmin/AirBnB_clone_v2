@@ -1,28 +1,25 @@
 #!/usr/bin/python3
-""" Starts a Flash Web Application """
+"""Flask web application that lists all State objects from DBStorage."""
 
-
+from flask import Flask, render_template
 from models import storage
 from models.state import State
-from flask import Flask, render_template
 
 app = Flask(__name__)
 
 
 @app.teardown_appcontext
-def close_db(error):
-    """ Remove the current SQLAlchemy Session """
+def close_storage(exception):
+    """Close the storage session after each request."""
     storage.close()
 
 
 @app.route('/states_list', strict_slashes=False)
 def states_list():
-    """ displays a HTML page with a list of states """
-    states = storage.all(State).values()
-    states = sorted(states, key=lambda k: k.name)
+    """Display a HTML page with a list of all State objects present in DBStorage."""
+    states = sorted(storage.all(State).values(), key=lambda state: state.name)
     return render_template('7-states_list.html', states=states)
 
 
-if __name__ == "__main__":
-    """ Main Function """
+if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
